@@ -90,13 +90,16 @@ pub fn group_trials<G: GroupElement>() {
 
     assert!((G::one() * (-Fr::one()) + G::one()).is_zero());
 
-    use rand::{SeedableRng,StdRng};
-    let seed: [usize; 4] = [103245, 191922, 1293, 192103];
-    let mut rng = StdRng::from_seed(&seed);
+    use rand::{SeedableRng, StdRng};
+
+    let seed: [u8; 32] = [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+        26, 27, 28, 29, 30, 31, 32,
+    ];
+    let mut rng: StdRng = SeedableRng::from_seed(seed);
 
     random_test_addition::<G, _>(&mut rng);
     random_test_doubling::<G, _>(&mut rng);
     random_test_dh::<G, _>(&mut rng);
     random_test_equality::<G, _>(&mut rng);
 }
-
